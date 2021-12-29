@@ -35,19 +35,26 @@ jobs:
           go version
           protoc --version
 
+      - name: Proto
+        run: |
+          protoc --proto_path=proto proto/command_service.proto --go_out=proto --go-grpc_out=proto
+
       - name: Vet
-        run: go vet ./...
+        run: |
+          go vet ./...
 
       - name: Lint
-        run: golint ./...
+        run: |
+          golint ./...
 
       - name: Staticcheck
-        run: staticcheck ./...
+        run: |
+          staticcheck ./...
 
       - name: Test
-        run: go test -v ./...
+        run: |
+          go test -v ./...
 
       - name: Build
         run: |
-          protoc --proto_path=proto proto/command_service.proto --go_out=proto --go-grpc_out=proto
           go build -v ./...

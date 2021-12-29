@@ -3,7 +3,8 @@
 **/*.pb.go
 **/*.code-workspace
 **/vendor
-**/certificates/*
+**/certificates/assets/*.pem
+**/certificates/assets/*.srl
 !**/certificates/*.go
 !**/certificates/*.cnf
 

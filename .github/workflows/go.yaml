@@ -17,7 +17,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          apt install -y protobuf-compiler
+          sudo apt install -y protobuf-compiler
           go get -u golang.org/x/lint/golint
           go install -v github.com/uudashr/gopkgs/v2/cmd/gopkgs@latest
           go install -v github.com/ramya-rao-a/go-outline@latest

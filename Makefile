@@ -11,7 +11,7 @@ ifeq ($(UNAME_S),Darwin)
 	goos_type = "darwin"
 endif
 
-.PHONY all: clean test cert proto build
+.PHONY all: clean cert proto test build
 
 .PHONY test: proto go-fmt go-vet go-lint go-test
 

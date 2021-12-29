@@ -37,6 +37,8 @@ jobs:
 
       - name: Make Proto and Certs
         run: |
+          pwd
+          ls -la
           make proto
           make cert
 

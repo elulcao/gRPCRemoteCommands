@@ -7,7 +7,7 @@ FROM mcr.microsoft.com/vscode/devcontainers/go:0-${VARIANT}
 # [Choice] Node.js version: none, lts/*, 16, 14, 12, 10
 ARG NODE_VERSION="none"
 RUN if [ "${NODE_VERSION}" != "none" ]; then \
-        su vscode -c "umask 0002 && . /usr/local/share/nvm/nvm.sh && nvm install ${NODE_VERSION} 2>&1"; \
+    su vscode -c "umask 0002 && . /usr/local/share/nvm/nvm.sh && nvm install ${NODE_VERSION} 2>&1"; \
     fi
 
 # [Optional] Uncomment this section to install additional OS packages.
@@ -22,6 +22,7 @@ RUN go install -v github.com/uudashr/gopkgs/v2/cmd/gopkgs@latest && \
     go install -v github.com/fatih/gomodifytags@latest && \
     go install -v github.com/josharian/impl@latest && \
     go install -v github.com/haya14busa/goplay/cmd/goplay@latest && \
+    go install -v honnef.co/go/tools/cmd/staticcheck@latest && \
     go install -v google.golang.org/protobuf/cmd/protoc-gen-go@latest && \
     go install -v google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest 2>&1 && \
     go clean -modcache

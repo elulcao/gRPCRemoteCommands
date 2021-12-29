@@ -59,3 +59,4 @@ install: proto build
 clean:
 	find . -type f -name $(APP_NAME).* -exec rm -rf {} \;
 	find . -type f -name *.pb.go -exec rm -rf {} \;
+	find . -type f \( -name "*.pem" -o -name "*.srl" \) -exec rm -rf {} \;

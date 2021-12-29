@@ -35,9 +35,10 @@ jobs:
           go version
           protoc --version
 
-      - name: Proto
+      - name: Make Proto and Certs
         run: |
-          protoc --proto_path=proto proto/command_service.proto --go_out=proto --go-grpc_out=proto
+          make proto
+          make cert
 
       - name: Vet
         run: |

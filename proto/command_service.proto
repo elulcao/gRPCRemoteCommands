@@ -1,0 +1,19 @@
+syntax = "proto3";
+package proto;
+
+option go_package = "./";
+
+// RemoteCommand is a command to be executed on a remote machine.
+service RemoteCommand {
+    rpc executeCommand(CommandRequest) returns (CommandResponse) {}
+}
+
+// CommandRequest is a request to execute a command.
+message CommandRequest {
+    string cmd = 1;
+}
+
+// CommandResponse is a response to a command.
+message CommandResponse {
+    string out = 1;
+}

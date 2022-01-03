@@ -76,7 +76,7 @@ The certificates are generated with the following script: `scripts/certs.sh`.
 The protobuf file is generated with the following command: `protoc --proto_path=proto proto/command_service.proto --go_out=proto --go-grpc_out=proto`.
 
 
-# Buildin the server and client withing the development environment
+# Buildin the server and client with the development environment
 
 The devcontianer can be used, `.devcontainer/Dockerfile`, to build the server and client when running
 cloned the repo in a Windows machine. The binafiles generated must be used in Linux machines, since

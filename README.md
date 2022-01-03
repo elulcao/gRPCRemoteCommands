@@ -1,5 +1,10 @@
 # gRPCRemoteCommands
 
+[![Go CI](https://github.com/elulcao/gRPCRemoteCommands/actions/workflows/go.yaml/badge.svg)](https://github.com/elulcao/gRPCRemoteCommands/actions/workflows/go.yaml)
+[![CodeQl CI](https://github.com/elulcao/gRPCRemoteCommands/actions/workflows/codeql-analysis.yaml/badge.svg)](https://github.com/elulcao/gRPCRemoteCommands/actions/workflows/codeql-analysis.yaml)
+
+---
+
 <p
     align="center">
     <img
@@ -9,6 +14,8 @@
         height="400"
     />
 </p>
+
+---
 
 `Unary gRPC` demo, with embedded certificates and TLS for secure communication between client and server.
 

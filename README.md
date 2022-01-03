@@ -8,12 +8,6 @@
         width="600"
         height="400"
     />
-    <figcaption
-        align="center">
-        <b>
-            Fig.1 - Demo 01 - localhost
-        </b>
-    </figcaption>
 </p>
 
 `Unary gRPC` demo, with embedded certificates and TLS for secure communication between client and server.
@@ -45,3 +39,24 @@ message CommandResponse {
     string out = 1;
 }
 ```
+
+# Building the server and client
+
+Server and client are using certificates to secure the communication. The certificates are generated
+locally and then embedded in the code. This is intended to make it easier to distribute the binary,
+there is no need to generate the certificates and propagate them to the client and server since this
+is a demo and not a production application; so, only go 1.16 and above is supported.
+
+To build the server and client, first generate the certificates, then build the protobuf files,
+then build the server and client.
+
+All the steps can be done in a single command: `make`.
+The certificates are generated with the following script: `scripts/certs.sh`.
+The protobuf file is generated with the following command: `protoc --proto_path=proto proto/command_service.proto --go_out=proto --go-grpc_out=proto`.
+
+
+# Buildin the server and client withing the development environment
+
+The devcontianer can be used, `.devcontainer/Dockerfile`, to build the server and client when running
+cloned the repo in a Windows machine. The binafiles generated must be used in Linux machines, since
+the devcontainer is built with a Linux image.

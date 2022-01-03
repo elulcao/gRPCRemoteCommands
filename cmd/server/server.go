@@ -8,6 +8,7 @@ import (
 	"log"
 	"net"
 	"os/exec"
+	"strings"
 
 	ce "github.com/elulcao/gRPCRemoteCommands/certificates"
 	pb "github.com/elulcao/gRPCRemoteCommands/proto"
@@ -33,8 +34,14 @@ type server struct {
 
 // ExecuteCommand implements the ExecuteCommand RPC
 func (s *server) ExecuteCommand(ctx context.Context, in *pb.CommandRequest) (*pb.CommandResponse, error) {
-	cmd := exec.Command(in.Cmd)
-	stdout, err := cmd.CombinedOutput()
+	cmd := strings.Fields(in.Cmd)[0]   // get the first word
+	args := strings.Fields(in.Cmd)[1:] // get the rest of the words
+
+	c := exec.Command(cmd, args...)
+	stdout, err := c.CombinedOutput()
+
+	log.Print("Execute command: ", in.Cmd)
+	log.Print("Output  command: ", string(stdout))
 
 	return &pb.CommandResponse{
 		Out: string(stdout),

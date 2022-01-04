@@ -38,8 +38,10 @@ cert:
 
 .PHONY: build
 
-build: clean proto
-	env GO111MODULE=auto GOOS=$(goos_type) GOARCH=amd64 go build -v -o "$(APP_NAME).$(goos_type)"
+build: clean cert proto
+	env GO111MODULE=auto GOOS=darwin GOARCH=amd64       go build -v -o "$(APP_NAME).darwin" && \
+	env GO111MODULE=auto GOOS=linux  GOARCH=amd64       go build -v -o "$(APP_NAME).linux"  && \
+    env GO111MODULE=auto GOOS=linux  GOARCH=arm GOARM=6 go build -v -o "$(APP_NAME).arm"
 
 .PHONY: proto
 
@@ -57,6 +59,6 @@ install: proto build
 .PHONY: clean
 
 clean:
-	find . -type f -name $(APP_NAME).* -exec rm -rf {} \;
-	find . -type f -name *.pb.go -exec rm -rf {} \;
+	find . -type f -name "$(APP_NAME).*" -exec rm -rf {} \;
+	find . -type f -name "*.pb.go"       -exec rm -rf {} \;
 	find . -type f \( -name "*.pem" -o -name "*.srl" \) -exec rm -rf {} \;

@@ -69,7 +69,7 @@ message CommandResponse {
 }
 ```
 
-# Building the server and client
+## Building the server and client
 
 Server and client are using certificates to secure the communication. The certificates are generated
 locally and then embedded in the code. This is intended to make it easier to distribute the binary,
@@ -80,26 +80,28 @@ To build the server and client, first generate the certificates, then build the 
 build the server and client.
 
 All the steps can be done in a single command:
+
 * `make build`
 
 The certificates are generated with the following script:
+
 * `scripts/certs.sh`
 
 The protobuf file is generated with the following command:
+
 * `protoc --proto_path=proto proto/command_service.proto --go_out=proto --go-grpc_out=proto`
 
 Binary generated can be used in the local host since the certificates are generated with IP address
 like `0.0.0.0`. Change the IP address to the IP address of the machine where the server is running
 and generate the certificates and binary again.
 
-
-# Building the server and client with the development environment
+## Building the server and client with the development environment
 
 The devcontianer can be used, `.devcontainer/Dockerfile`, to build the server and client when running
 cloned the repo in a Windows machine. The binafiles generated must be used in Linux machines, since
 the devcontainer is built with a Linux image.
 
-# Notes
+## Notes
 
 Commands with arguments are allowed but commands that require an interactive shell are not supported,
 i.e. `sudo`, `htop`, `top`, `vim`, `vi`.

@@ -18,10 +18,10 @@ import (
 
 const (
 // Define the path for the certificates if not embedded
-//clientCertFile   = "scripts/certificates/client-cert.pem"
-//clientKeyFile    = "scripts/certificates/client-key.pem"
-//clientCACertFile = "scripts/certificates/ca-cert.pem"
-//port = "50051"
+// clientCertFile   = "scripts/certificates/client-cert.pem"
+// clientKeyFile    = "scripts/certificates/client-key.pem"
+// clientCACertFile = "scripts/certificates/ca-cert.pem"
+// port = "50051"
 )
 
 // loadTLSCredentials loads TLS credentials from files.

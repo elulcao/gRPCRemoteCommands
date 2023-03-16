@@ -1,14 +1,14 @@
 APP_NAME  := gRPCRemoteCommands
 GO_FILES  := $(shell find . -type f -not -path './vendor/*' -name '*.go')
 UNAME_S   := $(shell uname -s)
-goos_type := ""
+GOOS_TYPE := ""
 
 ifeq ($(UNAME_S),Linux)
-	goos_type = "linux"
+	GOOS_TYPE = "linux"
 endif
 
 ifeq ($(UNAME_S),Darwin)
-	goos_type = "darwin"
+	GOOS_TYPE = "darwin"
 endif
 
 .PHONY all: clean cert proto test build
@@ -17,19 +17,19 @@ endif
 
 go-test:
 	@echo "Running go test"
-	go test ./...
+	GOFLAGS=-mod=mod go test ./...
 
 go-vet:
 	@echo "Running go vet"
-	go vet ./...
+	GOFLAGS=-mod=mod go vet ./...
 
 go-lint:
 	@echo "Running go lint"
-	go list ./... | grep -v upstream-go | xargs $(shell go env GOPATH)/bin/golint -set_exit_status=1
+	GOFLAGS=-mod=mod go list ./... | grep -v upstream-go | xargs $(shell go env GOPATH)/bin/golint -set_exit_status=1
 
 go-fmt:
 	@echo "Running go fmt"
-	go fmt ./...
+	GOFLAGS=-mod=mod go fmt ./...
 
 .PHONY: cert
 
@@ -39,9 +39,9 @@ cert:
 .PHONY: build
 
 build: clean cert proto
-	env GO111MODULE=auto GOOS=darwin GOARCH=amd64       go build -v -o "$(APP_NAME).darwin" && \
-	env GO111MODULE=auto GOOS=linux  GOARCH=amd64       go build -v -o "$(APP_NAME).linux"  && \
-    env GO111MODULE=auto GOOS=linux  GOARCH=arm GOARM=6 go build -v -o "$(APP_NAME).arm"
+	env GO111MODULE=auto GOFLAGS=-mod=mod GOOS=darwin GOARCH=amd64       go build -v -o "$(APP_NAME).darwin" && \
+	env GO111MODULE=auto GOFLAGS=-mod=mod GOOS=linux  GOARCH=amd64       go build -v -o "$(APP_NAME).linux"  && \
+    env GO111MODULE=auto GOFLAGS=-mod=mod GOOS=linux  GOARCH=arm GOARM=6 go build -v -o "$(APP_NAME).arm"
 
 .PHONY: proto
 
@@ -54,7 +54,7 @@ proto:
 .PHONY: install
 
 install: proto build
-	install -m 0755 "$(APP_NAME).$(goos_type)" "/usr/local/bin/$(APP_NAME)"
+	install -m 0755 "$(APP_NAME).$(GOOS_TYPE)" "/usr/local/bin/$(APP_NAME)"
 
 .PHONY: clean
 

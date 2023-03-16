@@ -21,10 +21,10 @@ import (
 
 const (
 // Define the path for the certificates if not embedded
-//serverCertFile   = "scripts/certificates/server-cert.pem"
-//serverKeyFile    = "scripts/certificates/server-key.pem"
-//serverCACertFile = "scripts/certificates/ca-cert.pem"
-//port = "50051"
+// serverCertFile   = "scripts/certificates/server-cert.pem"
+// serverKeyFile    = "scripts/certificates/server-key.pem"
+// serverCACertFile = "scripts/certificates/ca-cert.pem"
+// port = "50051"
 )
 
 // server is used to impleeent the server

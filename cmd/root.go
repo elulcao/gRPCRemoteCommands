@@ -8,6 +8,7 @@ import (
 	server "github.com/elulcao/gRPCRemoteCommands/cmd/server"
 
 	"github.com/spf13/cobra"
+	"github.com/spf13/pflag"
 	"github.com/spf13/viper"
 )
 
@@ -63,4 +64,13 @@ func initConfig() {
 	if err := viper.ReadInConfig(); err == nil {
 		fmt.Fprintln(os.Stderr, "Using config file:", viper.ConfigFileUsed())
 	}
+}
+
+// viperToCobraFlags assigns vpr values to Cobra flags.
+func viperToCobraFlags(cmd *cobra.Command, vpr *viper.Viper) {
+	cmd.Flags().VisitAll(func(f *pflag.Flag) {
+		if vpr.IsSet(f.Name) {
+			_ = cmd.Flags().Set(f.Name, vpr.GetString(f.Name))
+		}
+	})
 }

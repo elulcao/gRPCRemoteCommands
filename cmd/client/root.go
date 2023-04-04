@@ -5,27 +5,26 @@ import (
 	"github.com/spf13/viper"
 )
 
-// NewSubCmdClient new release command
-func NewSubCmdClient() *cobra.Command {
-	clientCmd := &cobra.Command{
-		Use:     "client",
-		Short:   "Start gRPC client",
-		Long:    `Start gRPC client for executing a command in remote host, TLS = true`,
-		Example: "gRPCRemoteCommands client --command hostname -h localhost -p 50051 -c /tmp/config.yaml",
-		Run: func(cmd *cobra.Command, args []string) {
-			err := clientMain(cmd)
-			if err != nil {
-				panic(err)
-			}
-		},
-	}
+// ClientCmd new release command
+var ClientCmd = &cobra.Command{
+	Use:     "client",
+	Short:   "Start gRPC client",
+	Long:    `Start gRPC client for executing a command in remote host, TLS = true`,
+	Example: "gRPCRemoteCommands client --command hostname -h localhost -p 50051 -c /tmp/config.yaml",
+	Run: func(cmd *cobra.Command, args []string) {
+		err := clientMain(cmd)
+		if err != nil {
+			panic(err)
+		}
+	},
+}
 
-	clientCmd.Flags().String("command", "hostname", "Command to execute in remote host") // Command to execute in remote host
-	viper.BindPFlag("command", clientCmd.Flags().Lookup("command"))
-	clientCmd.Flags().String("host", "localhost", "Host to connect to") // Host to connect to
-	viper.BindPFlag("host", clientCmd.Flags().Lookup("host"))
-	clientCmd.Flags().String("port", "50051", "Port to connect to") // Port to connect to
-	viper.BindPFlag("port", clientCmd.Flags().Lookup("port"))
+func init() {
+	ClientCmd.Flags().String("command", "hostname", "Command to execute in remote host") // Command to execute in remote host
+	ClientCmd.Flags().String("host", "localhost", "Host to connect to")                  // Host to connect to
+	ClientCmd.Flags().String("port", "50051", "Port to connect to")                      // Port to connect to
 
-	return clientCmd
+	viper.BindPFlag("command", ClientCmd.Flags().Lookup("command"))
+	viper.BindPFlag("host", ClientCmd.Flags().Lookup("host"))
+	viper.BindPFlag("port", ClientCmd.Flags().Lookup("port"))
 }

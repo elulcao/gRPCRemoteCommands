@@ -4,15 +4,16 @@ import (
 	"fmt"
 	"os"
 
-	client "github.com/elulcao/gRPCRemoteCommands/cmd/client"
-	server "github.com/elulcao/gRPCRemoteCommands/cmd/server"
-
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"
 	"github.com/spf13/viper"
+
+	"github.com/elulcao/gRPCRemoteCommands/cmd/client"
+	"github.com/elulcao/gRPCRemoteCommands/cmd/server"
 )
 
 var cfgFile string
+var vpr = viper.New()
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
@@ -38,31 +39,35 @@ func init() {
 	// Cobra supports persistent flags, which, if defined here, will be global for your application.
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.gRPCRemoteCommands.yaml)")
 
-	rootCmd.AddCommand(server.NewSubCmdServer())
-	rootCmd.AddCommand(client.NewSubCmdClient())
+	rootCmd.AddCommand(server.ServerCmd)
+	rootCmd.AddCommand(client.ClientCmd)
 }
 
 // initConfig reads in config file and ENV variables if set.
 func initConfig() {
 	if cfgFile != "" {
 		// Use config file from the flag.
-		viper.SetConfigFile(cfgFile)
+		vpr.SetConfigFile(cfgFile)
 	} else {
 		// Find home directory.
 		home, err := os.UserHomeDir()
 		cobra.CheckErr(err)
 
 		// Search config in home directory with name ".gRPCRemoteCommands" (without extension).
-		viper.AddConfigPath(home)
-		viper.SetConfigType("yaml")
-		viper.SetConfigName(".gRPCRemoteCommands")
+		vpr.AddConfigPath(home)
+		vpr.SetConfigType("yaml")
+		vpr.SetConfigName(".gRPCRemoteCommands")
 	}
 
-	viper.AutomaticEnv() // read in environment variables that match
+	vpr.AutomaticEnv() // read in environment variables that match
 
 	// If a config file is found, read it in.
-	if err := viper.ReadInConfig(); err == nil {
-		fmt.Fprintln(os.Stderr, "Using config file:", viper.ConfigFileUsed())
+	if err := vpr.ReadInConfig(); err == nil {
+		fmt.Fprintln(os.Stderr, "Using config file:", vpr.ConfigFileUsed())
+
+		// Assign values from viper to cobra flags
+		viperToCobraFlags(server.ServerCmd, vpr)
+		viperToCobraFlags(client.ClientCmd, vpr)
 	}
 }
 

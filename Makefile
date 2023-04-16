@@ -11,9 +11,7 @@ ifeq ($(UNAME_S),Darwin)
 	GOOS_TYPE = "darwin"
 endif
 
-.PHONY all: clean cert proto test build
-
-.PHONY test: proto go-fmt go-vet go-lint go-test
+.PHONY: clean cert install vendor proto test build go-fmt go-vet go-lint go-test
 
 go-test:
 	@echo "Running go test"
@@ -31,19 +29,16 @@ go-fmt:
 	@echo "Running go fmt"
 	GOFLAGS=-mod=mod go fmt ./...
 
-.PHONY: cert
 
 cert:
 	cd scripts ; ./certs.sh ; cd ..
 
-.PHONY: build
 
 build: clean cert proto
 	env GO111MODULE=auto GOFLAGS=-mod=mod GOOS=darwin GOARCH=amd64       go build -v -o "$(APP_NAME).darwin" && \
 	env GO111MODULE=auto GOFLAGS=-mod=mod GOOS=linux  GOARCH=amd64       go build -v -o "$(APP_NAME).linux"  && \
     env GO111MODULE=auto GOFLAGS=-mod=mod GOOS=linux  GOARCH=arm GOARM=6 go build -v -o "$(APP_NAME).arm"
 
-.PHONY: proto
 
 proto:
 	protoc --proto_path=proto \
@@ -51,12 +46,12 @@ proto:
 		--go_out=proto \
 		--go-grpc_out=proto
 
-.PHONY: install
 
 install: proto build
 	install -m 0755 "$(APP_NAME).$(GOOS_TYPE)" "/usr/local/bin/$(APP_NAME)"
 
-.PHONY: clean
+vendor:
+	go mod tidy && go mod vendor
 
 clean:
 	find . -type f -name "$(APP_NAME).*" -exec rm -rf {} \;

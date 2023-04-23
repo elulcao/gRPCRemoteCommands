@@ -69,7 +69,7 @@ func loadTLSCredentials() (credentials.TransportCredentials, error) {
 	//serverCert, err := tls.LoadX509KeyPair(serverCertF.Name(), serverKeyF.Name())
 	serverCert, err := tls.X509KeyPair(serverCertFile, serverKeyFile)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to load server's certificate or key: %w", err)
 	}
 
 	// Create the credentials and return it
@@ -105,14 +105,12 @@ func serverMain(cmd *cobra.Command) error {
 
 	listener, err := net.Listen("tcp", fmt.Sprintf("%v:%v", h, p))
 	if err != nil {
-		log.Fatalf("failed to listen: %v", err)
-		return err
+		return fmt.Errorf("failed to listen: %w", err)
 	}
 
 	err = runGRPCServer(listener)
 	if err != nil {
-		log.Fatal("cannot start server: ", err)
-		return err
+		return fmt.Errorf("cannot start server: %w", err)
 	}
 
 	return nil

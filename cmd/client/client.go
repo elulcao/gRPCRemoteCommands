@@ -68,8 +68,7 @@ func clientMain(cmd *cobra.Command) error {
 
 	tlsCredentials, err := loadTLSCredentials()
 	if err != nil {
-		log.Fatal("cannot load TLS credentials: ", err)
-		return err
+		return fmt.Errorf("cannot load TLS credentials: %v", err)
 	}
 
 	transportOption := grpc.WithTransportCredentials(tlsCredentials)
@@ -79,8 +78,7 @@ func clientMain(cmd *cobra.Command) error {
 		transportOption,
 	)
 	if err != nil {
-		log.Fatal("cannot dial server: ", err)
-		return err
+		return fmt.Errorf("cannot dial server: %v", err)
 	}
 	defer conn.Close()
 
@@ -92,9 +90,9 @@ func clientMain(cmd *cobra.Command) error {
 		Cmd: c,
 	})
 	if err != nil {
-		log.Fatalf("could not execute command: %v", err)
-		return err
+		return fmt.Errorf("could not execute command: %v", err)
 	}
+
 	log.Printf("Output: \n %s", r.Out)
 
 	return nil

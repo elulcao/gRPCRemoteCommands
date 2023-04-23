@@ -37,7 +37,7 @@ cert:
 build: clean cert proto
 	env GO111MODULE=auto GOFLAGS=-mod=mod GOOS=darwin GOARCH=amd64       go build -v -o "$(APP_NAME).darwin" && \
 	env GO111MODULE=auto GOFLAGS=-mod=mod GOOS=linux  GOARCH=amd64       go build -v -o "$(APP_NAME).linux"  && \
-    env GO111MODULE=auto GOFLAGS=-mod=mod GOOS=linux  GOARCH=arm GOARM=6 go build -v -o "$(APP_NAME).arm"
+  env GO111MODULE=auto GOFLAGS=-mod=mod GOOS=linux  GOARCH=arm GOARM=6 go build -v -o "$(APP_NAME).arm"
 
 
 proto:

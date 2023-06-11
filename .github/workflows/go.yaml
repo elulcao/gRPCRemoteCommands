@@ -25,6 +25,12 @@ jobs:
       - name: Show versions
         run: |
           go version
+          protoc --version
+
+      - name: Make Proto and Certs
+        run: |
+          make proto
+          make cert
 
       - name: Vet
         run: |

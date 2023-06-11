@@ -24,6 +24,7 @@ jobs:
 
       - name: Install dependencies
         run: |
+          apt update
           apt install -y protobuf-compiler
           go install -v honnef.co/go/tools/cmd/staticcheck@latest
           go install -v google.golang.org/protobuf/cmd/protoc-gen-go@latest

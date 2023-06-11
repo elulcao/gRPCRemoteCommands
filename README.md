@@ -8,7 +8,7 @@
 <p
     align="center">
     <img
-        src="./assets/demo-01.gif"
+        src=".assets/demo-01.gif"
         alt="Demo 01 - localhost"
         width="600"
         height="400"
@@ -25,7 +25,7 @@ sent back to the client. In this case the request is a `command` to be executed 
 response is the `result of the command`.
 
 The connections is secured by `TLS`, which is a transport layer security protocol. This eliminates the
-need for SSH keys or passwords. The client and server are configured to use the same  certificate
+need for SSH keys or passwords. The client and server are configured to use the same certificate
 and key; the certificates are generated locally and then embedded in the code. Having the certificates
 embedded in the code makes it easier to distribute the binary server and client, since this is a
 demo and not a production application.
@@ -81,15 +81,15 @@ build the server and client.
 
 All the steps can be done in a single command:
 
-* `make build`
+- `make build`
 
 The certificates are generated with the following script:
 
-* `scripts/certs.sh`
+- `scripts/certs.sh`
 
 The protobuf file is generated with the following command:
 
-* `protoc --proto_path=proto proto/command_service.proto --go_out=proto --go-grpc_out=proto`
+- `protoc --proto_path=proto proto/command_service.proto --go_out=proto --go-grpc_out=proto`
 
 Binary generated can be used in the local host since the certificates are generated with IP address
 like `0.0.0.0`. Change the IP address to the IP address of the machine where the server is running

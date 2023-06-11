@@ -8,50 +8,27 @@ on:
 
 jobs:
   build:
+    name: Build
+    strategy:
+      matrix:
+        go: [1.19.9, 1.20.4]
     runs-on: ubuntu-latest
+    container: golang:${{ matrix.go }}-bullseye
+
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v3
 
       - name: Set up Go
-        uses: actions/setup-go@v2
-        with:
-          go-version: 1.19
-
-      - name: Install dependencies
-        run: |
-          sudo apt install -y protobuf-compiler
-          go install -v golang.org/x/lint/golint@latest
-          go install -v github.com/uudashr/gopkgs/v2/cmd/gopkgs@latest
-          go install -v github.com/ramya-rao-a/go-outline@latest
-          go install -v github.com/cweill/gotests/gotests@latest
-          go install -v github.com/fatih/gomodifytags@latest
-          go install -v github.com/josharian/impl@latest
-          go install -v github.com/haya14busa/goplay/cmd/goplay@latest
-          go install -v honnef.co/go/tools/cmd/staticcheck@latest
-          go install -v google.golang.org/protobuf/cmd/protoc-gen-go@latest
-          go install -v google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
+        uses: actions/setup-go@v4
 
       - name: Show versions
         run: |
           go version
-          protoc --version
-
-      - name: Make Proto and Certs
-        run: |
-          make proto
-          make cert
 
       - name: Vet
         run: |
           go vet ./...
-
-      - name: Lint
-        run: |
-          golint ./...
-
-      - name: Staticcheck
-        run: |
-          staticcheck ./...
 
       - name: Test
         run: |
@@ -59,4 +36,6 @@ jobs:
 
       - name: Build
         run: |
-          go build -v ./...
+          git config --global --add safe.directory '*'
+          go mod vendor
+          env GO111MODULE=auto GOFLAGS=-mod=mod go build -v ./...

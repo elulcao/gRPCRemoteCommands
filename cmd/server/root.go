@@ -12,6 +12,7 @@ var ServerCmd = &cobra.Command{
 	Long:    "Start gRPC server, TLS = true",
 	Example: "gRPCRemoteCommands server --host localhost -p 50051 -c /tmp/config.yaml",
 	Run: func(cmd *cobra.Command, args []string) {
+		_ = args
 		err := serverMain(cmd)
 		if err != nil {
 			panic(err)
@@ -23,6 +24,6 @@ func init() {
 	ServerCmd.Flags().String("host", "localhost", "Host address")  // Host address
 	ServerCmd.Flags().String("port", "50051", "Port to listen on") // Port to listen on
 
-	viper.BindPFlag("host", ServerCmd.Flags().Lookup("host"))
-	viper.BindPFlag("port", ServerCmd.Flags().Lookup("port"))
+	_ = viper.BindPFlag("host", ServerCmd.Flags().Lookup("host"))
+	_ = viper.BindPFlag("port", ServerCmd.Flags().Lookup("port"))
 }

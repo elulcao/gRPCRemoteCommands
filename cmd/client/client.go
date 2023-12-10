@@ -52,7 +52,7 @@ func loadTLSCredentials() (credentials.TransportCredentials, error) {
 	config := &tls.Config{
 		Certificates:       []tls.Certificate{clientCert},
 		RootCAs:            certPool,
-		InsecureSkipVerify: true,
+		InsecureSkipVerify: false, // Change to true
 	}
 
 	return credentials.NewTLS(config), nil

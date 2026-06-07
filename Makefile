@@ -5,11 +5,11 @@ GO_FILES := $(shell find . -type f -not -path './vendor/*' -name '*.go')
 
 .PHONY: clean cert install vendor proto test build go-fmt go-vet go-test
 
-go-test:
+go-test: cert proto
 	@echo "Running go test"
 	GOFLAGS=-mod=mod go test ./...
 
-go-vet:
+go-vet: cert proto
 	@echo "Running go vet"
 	GOFLAGS=-mod=mod go vet ./...
 
@@ -27,9 +27,9 @@ build: clean cert proto
 proto:
 	protoc \
 		--proto_path=proto \
-		proto/command_service.proto \
-		--go_out=proto \
-		--go-grpc_out=proto
+		--go_out=proto --go_opt=paths=source_relative \
+		--go-grpc_out=proto --go-grpc_opt=paths=source_relative \
+		command_service.proto
 
 install: proto build
 	install -m 0755 "$(APP_NAME).$(GOOS_TYPE)" "/usr/local/bin/$(APP_NAME)"

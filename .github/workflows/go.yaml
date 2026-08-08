@@ -11,9 +11,11 @@ jobs:
     name: Build
     strategy:
       matrix:
-        go: [1.25]
+        go: ['1.25']
     runs-on: ubuntu-latest
-    container: golang:${{ matrix.go }}-bullseye
+    container: 
+      image: golang:${{ matrix.go }}-bookworm
+      options: --user 1001
 
     steps:
       - name: Checkout

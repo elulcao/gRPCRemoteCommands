@@ -1,7 +1,7 @@
 # gRPCRemoteCommands
 
 [![Go CI](https://github.com/elulcao/gRPCRemoteCommands/actions/workflows/go.yaml/badge.svg)](https://github.com/elulcao/gRPCRemoteCommands/actions/workflows/go.yaml)
-[![CodeQl CI](https://github.com/elulcao/gRPCRemoteCommands/actions/workflows/codeql-analysis.yaml/badge.svg)](https://github.com/elulcao/gRPCRemoteCommands/actions/workflows/codeql-analysis.yaml)
+[![CodeQL](https://github.com/elulcao/gRPCRemoteCommands/actions/workflows/codeql.yml/badge.svg)](https://github.com/elulcao/gRPCRemoteCommands/actions/workflows/codeql.yml)
 
 ---
 

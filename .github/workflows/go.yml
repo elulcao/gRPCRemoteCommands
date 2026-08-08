@@ -11,9 +11,9 @@ jobs:
     name: Build
     strategy:
       matrix:
-        go: ['1.25']
+        go: ["1.25"]
     runs-on: ubuntu-latest
-    container: 
+    container:
       image: golang:${{ matrix.go }}-bookworm
 
     steps:

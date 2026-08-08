@@ -15,7 +15,6 @@ jobs:
     runs-on: ubuntu-latest
     container: 
       image: golang:${{ matrix.go }}-bookworm
-      options: --user 1001
 
     steps:
       - name: Checkout
